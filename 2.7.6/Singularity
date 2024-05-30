@@ -1,0 +1,26 @@
+Bootstrap: docker
+From: ubuntu:20.04
+
+%labels
+    AUTHOR icaoberg
+    EMAIL icaoberg@psc.edu
+    SUPPORT help@psc.edu
+    REPOSITORY http://gitub.com/pscedu/singularity-beast2
+    COPYRIGHT Copyright © 2024 Pittsburgh Supercomputing Center. All Rights Reserved.
+    VERSION 2.7.6
+
+%files
+    BEAST.v2.7.6.Linux.x86.tgz /opt/    
+
+%environment
+    export PATH=$PATH:/opt/beast/bin
+
+%post
+    apt update
+    apt install -y default-jdk
+    apt install -y libxext6 libxrender1 libxtst6 libxi6
+    cd /opt
+    tar -xvf BEAST.v2.7.6.Linux.x86.tgz && rm -fv BEAST.v2.7.6.Linux.x86.tgz
+
+%runscript
+    /opt/beast/bin/applauncher
